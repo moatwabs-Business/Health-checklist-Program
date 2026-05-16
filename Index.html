@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <base target="_top">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    :root {
+
+      --bg: #FFF1D3;
+      --card: #ffffff;
+      --text: #5D1C6A;
+      --primary: #5D1C6A;
+      --accent: #CA5995;
+      --soft: #FFB090;
+      --border: #ecd9ef;
+      --success-bg: #efe3f3;
+      --task-bg: #fff4ea;
+    }
+
+
+
+    body.dark {
+
+      --bg: #1E1025;
+      --card: #2A1634;
+      --text: #FFF1D3;
+      --primary: #CA5995;
+      --accent: #FFB090;
+      --soft: #5D1C6A;
+      --border: #4f2d59;
+      --success-bg: #3a2443;
+      --task-bg: #34203d;
+    }
+
+
+
+    * {
+
+      box-sizing: border-box;
+    }
+
+
+
+    body {
+
+      margin: 0;
+
+      padding: 20px;
+
+      font-family: 'Poppins', sans-serif;
+
+      background: var(--bg);
+
+      color: var(--text);
+
+      transition: 0.3s;
+    }
+
+
+
+    .container {
+
+      max-width: 700px;
+
+      margin: auto;
+    }
+
+
+
+    .card {
+
+      background: var(--card);
+
+      border-radius: 28px;
+
+      padding: 24px;
+
+      box-shadow:
+        0 10px 30px rgba(0,0,0,0.08);
+
+      transition: 0.3s;
+    }
+
+
+
+    .topbar {
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 999;
+
+      background: var(--card);
+
+      padding-bottom: 14px;
+    }
+
+
+
+    .header-row {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      margin-bottom: 10px;
+    }
+
+
+
+    h1 {
+
+      margin: 0;
+
+      font-size: 40px;
+
+      font-weight: 800;
+    }
+
+
+
+    .subtitle {
+
+      margin-top: 4px;
+
+      opacity: 0.75;
+
+      font-size: 14px;
+    }
+
+
+
+    .theme-toggle {
+
+      border: none;
+
+      background: var(--primary);
+
+      color: white;
+
+      width: 90px;
+
+      height: 52px;
+
+      border-radius: 16px;
+
+      cursor: pointer;
+
+      font-size: 16px;
+
+      font-weight: 700;
+    }
+
+
+
+    input,
+    select {
+
+      width: 100%;
+
+      padding: 16px;
+
+      border-radius: 16px;
+
+      border: 2px solid var(--border);
+
+      background: transparent;
+
+      color: var(--text);
+
+      margin-top: 12px;
+
+      font-size: 15px;
+
+      font-family: inherit;
+    }
+
+
+
+    input:focus,
+    select:focus {
+
+      outline: none;
+
+      border-color: var(--accent);
+    }
+
+
+
+    button {
+
+      width: 100%;
+
+      margin-top: 16px;
+
+      padding: 18px;
+
+      border: none;
+
+      border-radius: 18px;
+
+      background: var(--primary);
+
+      color: white;
+
+      font-size: 16px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+      transition: 0.25s;
+
+      font-family: inherit;
+    }
+
+
+
+    button:hover {
+
+      transform: translateY(-2px);
+    }
+
+
+
+    button:disabled {
+
+      opacity: 0.7;
+
+      cursor: not-allowed;
+
+      transform: none;
+    }
+
+
+
+    .progress-wrapper {
+
+      margin-top: 18px;
+    }
+
+
+
+    .progress-label {
+
+      font-size: 14px;
+
+      margin-bottom: 8px;
+
+      font-weight: 600;
+    }
+
+
+
+    .progress-bar {
+
+      width: 100%;
+
+      height: 14px;
+
+      background: rgba(0,0,0,0.08);
+
+      border-radius: 999px;
+
+      overflow: hidden;
+    }
+
+
+
+    .progress-fill {
+
+      height: 100%;
+
+      width: 0%;
+
+      background:
+        linear-gradient(
+          90deg,
+          var(--accent),
+          var(--primary)
+        );
+
+      transition: 0.3s;
+    }
+
+
+
+    .task {
+
+      margin-top: 14px;
+
+      padding: 18px;
+
+      border-radius: 18px;
+
+      background: var(--task-bg);
+
+      border: 2px solid var(--border);
+
+      display: flex;
+
+      flex-direction: row-reverse;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      gap: 16px;
+
+      animation: fadeIn 0.3s ease;
+    }
+
+
+
+    .task label {
+
+      flex: 1;
+
+      font-weight: 600;
+
+      line-height: 1.6;
+    }
+
+
+
+    .task input[type="checkbox"] {
+
+      width: 24px;
+
+      height: 24px;
+
+      accent-color: var(--primary);
+
+      cursor: pointer;
+    }
+
+
+
+    .success,
+    .error,
+    .toast {
+
+      padding: 16px;
+
+      border-radius: 16px;
+
+      margin-top: 18px;
+
+      font-weight: 600;
+    }
+
+
+
+    .success {
+
+      background: var(--success-bg);
+    }
+
+
+
+    .error {
+
+      background: #ffdede;
+
+      color: #a60000;
+    }
+
+
+
+    .toast {
+
+      position: fixed;
+
+      top: 20px;
+
+      right: 20px;
+
+      z-index: 9999;
+
+      background: var(--primary);
+
+      color: white;
+
+      min-width: 260px;
+
+      box-shadow:
+        0 10px 30px rgba(0,0,0,0.2);
+
+      animation:
+        slideIn 0.3s ease;
+    }
+
+
+
+    .empty-state {
+
+      margin-top: 24px;
+
+      padding: 28px;
+
+      border-radius: 18px;
+
+      text-align: center;
+
+      background: var(--task-bg);
+
+      border: 2px dashed var(--border);
+
+      font-weight: 600;
+    }
+
+
+
+    @keyframes fadeIn {
+
+      from {
+
+        opacity: 0;
+
+        transform: translateY(8px);
+      }
+
+      to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+      }
+    }
+
+
+
+    @keyframes slideIn {
+
+      from {
+
+        opacity: 0;
+
+        transform: translateX(20px);
+      }
+
+      to {
+
+        opacity: 1;
+
+        transform: translateX(0);
+      }
+    }
+
+
+
+    @media(max-width: 600px) {
+
+      body {
+
+        padding: 12px;
+      }
+
+
+
+      .card {
+
+        padding: 18px;
+      }
+
+
+
+      h1 {
+
+        font-size: 32px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="card">
+
+    <div class="topbar">
+
+      <div class="header-row">
+
+        <div>
+
+          <h1>
+            Health Tracker
+          </h1>
+
+          <div class="subtitle">
+
+            Daily Wellness & Habit System
+
+          </div>
+
+        </div>
+
+
+
+        <button
+          class="theme-toggle"
+          id="themeBtn"
+          onclick="toggleTheme()"
+        >
+          Night
+        </button>
+
+      </div>
+
+
+
+      <div class="progress-wrapper">
+
+        <div
+          class="progress-label"
+          id="progressText"
+        >
+          0 / 0 Tasks Completed
+        </div>
+
+
+
+        <div class="progress-bar">
+
+          <div
+            class="progress-fill"
+            id="progressFill"
+          ></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <input
+      type="text"
+      id="name"
+      placeholder="Your Name"
+    >
+
+
+
+    <input
+      type="email"
+      id="email"
+      placeholder="Your Email"
+    >
+
+
+
+    <input
+      type="date"
+      id="selectedDate"
+    >
+
+
+
+    <select id="period">
+
+      <option value="">
+        Select Period
+      </option>
+
+      <option value="morning">
+        WAKE FLOW / MORNING RITUAL
+      </option>
+
+      <option value="midday">
+        MIDDAY BLOCK
+      </option>
+
+      <option value="evening">
+        WIND-DOWN / SLEEP ONBOARDING
+      </option>
+
+    </select>
+
+
+
+    <button
+      id="loadBtn"
+      onclick="loadChecklist()"
+    >
+      Load Tasks
+    </button>
+
+
+
+    <div id="message"></div>
+
+    <div id="checklist"></div>
+
+  </div>
+
+</div>
+
+<script>
+
+let currentItems = [];
+
+
+
+window.onload = function() {
+
+  const today = new Date();
+
+  const sevenDaysAgo =
+    new Date();
+
+
+
+  sevenDaysAgo.setDate(
+    today.getDate() - 7
+  );
+
+
+
+  const formatDate = date => {
+
+    return date
+      .toISOString()
+      .split('T')[0];
+  };
+
+
+
+  const dateInput =
+    document.getElementById('selectedDate');
+
+
+
+  dateInput.max =
+    formatDate(today);
+
+  dateInput.min =
+    formatDate(sevenDaysAgo);
+
+  dateInput.value =
+    formatDate(today);
+
+
+
+  if (
+
+    localStorage.getItem('theme')
+    ===
+    'dark'
+
+  ) {
+
+    document.body.classList.add('dark');
+
+    document.getElementById(
+      'themeBtn'
+    ).innerText = 'Day';
+  }
+
+
+
+  document.getElementById('name').value =
+
+    localStorage.getItem('savedName')
+    ||
+    '';
+
+
+
+  document.getElementById('email').value =
+
+    localStorage.getItem('savedEmail')
+    ||
+    '';
+};
+
+
+
+function toggleTheme() {
+
+  document.body.classList.toggle('dark');
+
+
+
+  const isDark =
+
+    document.body.classList.contains('dark');
+
+
+
+  localStorage.setItem(
+
+    'theme',
+
+    isDark
+      ? 'dark'
+      : 'light'
+  );
+
+
+
+  document.getElementById(
+    'themeBtn'
+  ).innerText =
+
+    isDark
+      ? 'Day'
+      : 'Night';
+}
+
+
+
+function showToast(message) {
+
+  const toast =
+    document.createElement('div');
+
+
+
+  toast.className = 'toast';
+
+  toast.innerText = message;
+
+
+
+  document.body.appendChild(toast);
+
+
+
+  setTimeout(() => {
+
+    toast.remove();
+
+  }, 2500);
+}
+
+
+
+function updateProgress() {
+
+  const checkboxes =
+
+    document.querySelectorAll(
+      '#checklist input[type="checkbox"]'
+    );
+
+
+
+  const checked =
+
+    document.querySelectorAll(
+      '#checklist input[type="checkbox"]:checked'
+    );
+
+
+
+  const total =
+    checkboxes.length;
+
+  const completed =
+    checked.length;
+
+
+
+  const percent =
+
+    total === 0
+      ? 0
+      : Math.round(
+          (completed / total) * 100
+        );
+
+
+
+  document.getElementById(
+    'progressText'
+  ).innerText =
+
+    total === 0
+      ? 'Completed'
+      : `${completed} / ${total} Tasks Completed`;
+
+
+
+  document.getElementById(
+    'progressFill'
+  ).style.width = `${percent}%`;
+}
+
+
+
+function loadChecklist() {
+
+  /**
+   * CLEAR OLD ERRORS
+   */
+  document.getElementById(
+    'message'
+  ).innerHTML = '';
+
+
+
+  const name =
+
+    document.getElementById('name')
+      .value
+      .trim();
+
+
+
+  const email =
+
+    document.getElementById('email')
+      .value
+      .trim();
+
+
+
+  const selectedDate =
+
+    document.getElementById('selectedDate')
+      .value;
+
+
+
+  const period =
+
+    document.getElementById('period')
+      .value;
+
+
+
+  if (
+
+    !name ||
+    !email ||
+    !selectedDate ||
+    !period
+
+  ) {
+
+    showToast(
+      'Please fill all fields.'
+    );
+
+    return;
+  }
+
+
+
+  localStorage.setItem(
+    'savedName',
+    name
+  );
+
+
+
+  localStorage.setItem(
+    'savedEmail',
+    email
+  );
+
+
+
+  const loadBtn =
+    document.getElementById('loadBtn');
+
+
+
+  loadBtn.disabled = true;
+
+  loadBtn.innerText = 'Loading...';
+
+
+
+  google.script.run
+
+    .withSuccessHandler(function(alreadySubmitted) {
+
+      if (alreadySubmitted) {
+
+        loadBtn.disabled = false;
+
+        loadBtn.innerText = 'Load Tasks';
+
+
+
+        document.getElementById(
+          'checklist'
+        ).innerHTML = '';
+
+
+
+        document.getElementById(
+          'message'
+        ).innerHTML = `
+
+          <div class="error">
+
+            You already submitted this period for this date.
+
+          </div>
+
+        `;
+
+        return;
+      }
+
+
+
+      /**
+       * CLEAR ERROR IF VALID
+       */
+      document.getElementById(
+        'message'
+      ).innerHTML = '';
+
+
+
+      google.script.run
+
+        .withSuccessHandler(function(items) {
+
+          loadBtn.disabled = false;
+
+          loadBtn.innerText = 'Load Tasks';
+
+
+
+          renderChecklist(items);
+
+        })
+
+        .getChecklist(
+          period,
+          selectedDate
+        );
+
+    })
+
+    .checkPeriodSubmission(
+      email,
+      selectedDate,
+      period
+    );
+}
+
+
+
+function renderChecklist(
+  items,
+  previewOnly = false,
+  title = 'Checklist'
+) {
+
+  currentItems = items;
+
+
+
+  if (items.length === 0) {
+
+    document.getElementById(
+      'checklist'
+    ).innerHTML = `
+
+      <div class="empty-state">
+
+        No tasks assigned for this day.
+
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+
+  let html = `
+
+    <h2>${title}</h2>
+
+  `;
+
+
+
+  if (previewOnly) {
+
+    html += `
+
+      <div class="success">
+
+        Checklist submitted successfully!
+
+      </div>
+
+    `;
+  }
+
+
+
+  items.forEach((item, index) => {
+
+    if (previewOnly) {
+
+      html += `
+
+        <div class="task">
+
+          <label>
+
+            ${item.text}
+
+          </label>
+
+        </div>
+
+      `;
+    }
+
+    else {
+
+      html += `
+
+        <div class="task">
+
+          <input
+            type="checkbox"
+            id="task_${index}"
+            onchange="updateProgress()"
+          >
+
+          <label for="task_${index}">
+
+            ${item.text}
+
+          </label>
+
+        </div>
+
+      `;
+    }
+
+  });
+
+
+
+  if (!previewOnly) {
+
+    html += `
+
+      <button
+        id="submitBtn"
+        onclick="submitChecklist()"
+      >
+
+        Submit Selection
+
+      </button>
+
+    `;
+  }
+
+
+
+  document.getElementById(
+    'checklist'
+  ).innerHTML = html;
+
+
+
+  updateProgress();
+}
+
+
+
+function submitChecklist() {
+
+  const submitBtn =
+    document.getElementById('submitBtn');
+
+
+
+  submitBtn.disabled = true;
+
+  submitBtn.innerText = 'Submitting...';
+
+
+
+  const name =
+
+    document.getElementById('name')
+      .value
+      .trim();
+
+
+
+  const email =
+
+    document.getElementById('email')
+      .value
+      .trim();
+
+
+
+  const selectedDate =
+
+    document.getElementById('selectedDate')
+      .value;
+
+
+
+  const period =
+
+    document.getElementById('period')
+      .value;
+
+
+
+  const items = [];
+
+
+
+  currentItems.forEach((item, index) => {
+
+    items.push({
+
+      id: item.id,
+
+      text: item.text,
+
+      completed:
+
+        document.getElementById(
+          `task_${index}`
+        ).checked
+
+    });
+
+  });
+
+
+
+  google.script.run
+
+    .withSuccessHandler(function(response) {
+
+      showToast(response.message);
+
+
+
+      /**
+       * MORNING → MIDDAY
+       */
+      if (period === 'morning') {
+
+        google.script.run
+
+          .withSuccessHandler(function(nextItems) {
+
+            renderChecklist(
+
+              nextItems,
+
+              true,
+
+              'MIDDAY BLOCK Tasks'
+
+            );
+
+          })
+
+          .getChecklist(
+            'midday',
+            selectedDate
+          );
+
+        return;
+      }
+
+
+
+      /**
+       * MIDDAY → EVENING
+       */
+      if (period === 'midday') {
+
+        google.script.run
+
+          .withSuccessHandler(function(nextItems) {
+
+            renderChecklist(
+
+              nextItems,
+
+              true,
+
+              'WIND-DOWN / SLEEP ONBOARDING Tasks'
+
+            );
+
+          })
+
+          .getChecklist(
+            'evening',
+            selectedDate
+          );
+
+        return;
+      }
+
+
+
+      /**
+       * EVENING → TOMORROW MORNING
+       */
+      if (period === 'evening') {
+
+        const tomorrow =
+          new Date(selectedDate);
+
+
+
+        tomorrow.setDate(
+          tomorrow.getDate() + 1
+        );
+
+
+
+        const tomorrowFormatted =
+
+          tomorrow
+            .toISOString()
+            .split('T')[0];
+
+
+
+        google.script.run
+
+          .withSuccessHandler(function(nextItems) {
+
+            let html = `
+
+              <div class="success">
+
+                Checklist submitted successfully!
+
+              </div>
+
+              <div class="success">
+
+                All periods completed for today.
+
+              </div>
+
+              <h2>
+
+                WAKE FLOW / MORNING RITUAL Tasks
+
+              </h2>
+
+            `;
+
+
+
+            nextItems.forEach(item => {
+
+              html += `
+
+                <div class="task">
+
+                  <label>
+
+                    ${item.text}
+
+                  </label>
+
+                </div>
+
+              `;
+            });
+
+
+
+            document.getElementById(
+              'checklist'
+            ).innerHTML = html;
+
+          })
+
+          .getChecklist(
+            'morning',
+            tomorrowFormatted
+          );
+
+        return;
+      }
+
+    })
+
+    .submitChecklist({
+
+      name,
+      email,
+      selectedDate,
+      period,
+      items
+
+    });
+}
+
+</script>
+
+</body>
+</html>
